@@ -21,7 +21,11 @@ const departmentHelpers = () => {
       throw new Error("INTERNAL_SERVER_ERROR");
     }
   };
-
+  
+ /**
+  * Retrieve all departments
+  * @returns 
+  */
   const retrieveAllDepartments = async () => {
     try {
       const response = await DepartmentSchema.find();

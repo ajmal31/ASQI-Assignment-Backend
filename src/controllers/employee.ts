@@ -3,7 +3,13 @@ import { EmployeeSchema } from "../models/employee";
 import { Request,Response } from "express";
 
 const employeeController = () => {
-
+  
+  /**
+   * Add new employee
+   * @param req 
+   * @param res 
+   * @returns
+   */
   const addNewEmployee = async (req:Request,res:Response) => {
 
     const {name,department,address}=req.body
