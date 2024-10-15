@@ -1,3 +1,4 @@
+import { createEmployee } from "../helpers/employee";
 import { EmployeeSchema } from "../models/employee";
 import { Request,Response } from "express";
 
@@ -13,20 +14,8 @@ const employeeController = () => {
     if (!department) throw new Error("Please choose department");
     if (!address) throw new Error("Please enter address");
 
-    try {
-      const response = await new EmployeeSchema({
-        name,
-        department,
-        address,
-      }).save();
-
-      //sending json format
-      res.json(response)
-
-    } catch (error) {
-        console.log(error);
-        throw new Error("INTERNAL SERVER ERROR")
-    }
+    const response=await createEmployee(name,department,address)
+    res.json(response)
     
   };
 

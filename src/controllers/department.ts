@@ -1,34 +1,32 @@
-import { DepartmentSchema } from "../models/department";
+import { createDepartment, retrieveAllDepartments } from "../helpers/department";
 import { Request, Response } from "express";
 
-const departmentController =  () => {
+const departmentController = () => {
 
-  const addNewDepartment =async (req: Request, res: Response)=> {
-    const { name, description } = req.body;
-    if (!name && !description)
+  const addNewDepartment = async (req: Request, res: Response) => {
+
+    if (!req.body.name && !req.body.description)
       throw new Error("Please provide necessory details");
 
-    if (!name) throw new Error("Please enter name of department");
-    if (!description) throw new Error("Please enter description of department");
+    if (!req.body.name) throw new Error("Please enter name of department");
+    if (!req.body.description) throw new Error("Please enter description of department");
 
-    try {
-      const response = await new DepartmentSchema({
-        name,
-        description
-      }).save();
-      
-      console.log("department created",response);
-      res.json(response);
+    const { name, description } = req.body;
+    
+     const response=await createDepartment(name,description)
+     res.json(response)
+  };
 
-    } catch (error) {
-       console.log(error);
-        throw new Error("INTERNAL_SERVER_ERROR")
-    }
+  const getAllDepartments = async (req:Request,res:Response) => {
+   
+    const response=await retrieveAllDepartments()
+    res.json(response)
   };
 
   return {
     addNewDepartment,
+    getAllDepartments
   };
 };
 
-export const { addNewDepartment } = departmentController();
+export const { addNewDepartment,getAllDepartments } = departmentController();
