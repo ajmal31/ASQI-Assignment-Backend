@@ -1,15 +1,19 @@
-import { Router } from "express"
-import { addNewDepartment } from "../controllers/department"
-import { getAllDepartments } from "../controllers/department"
+import { Router } from 'express';
+import { addNewDepartment, getAllDepartments } from '../controllers/department';
 
-const departmentRoutes=()=>{
+/**
+ * Sets up routes for department-related operations.
+ * @returns {Router} Configured router for department routes.
+ */
+const departmentRoutes = (): Router => {
+    const router = Router();
 
-    const router=Router()
+    router
+        .route('/')
+        .post(addNewDepartment)   // POST / - Adds a new department.
+        .get(getAllDepartments);  // GET /  - Retrieves all departments.
 
-    router.route("/")
-    .post(addNewDepartment)
-    .get(getAllDepartments)
-    return router
-}
+    return router;
+};
 
-export default departmentRoutes
+export default departmentRoutes;

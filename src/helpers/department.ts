@@ -1,44 +1,51 @@
-import { DepartmentSchema } from "../models/department";
+import { DepartmentSchema } from '../models/department';
 
+/**
+ * Department Helpers
+ * Provides functions to interact with the department data model.
+ */
 const departmentHelpers = () => {
   /**
-   * create new department
-   * @param name
-   * @param description
-   * @returns created Document
+   * Create a new department.
+   *
+   * @param {string} name - Name of the department.
+   * @param {string} description - Description of the department.
+   * @returns  Created department document.
+   * @throws {Error} Throws an error if the department creation fails.
    */
-  const createDepartment = async (name: String, description: string) => {
+  const createDepartment = async (name: string, description: string): Promise<any> => {
     try {
-      const response = await new DepartmentSchema({
+      const department = new DepartmentSchema({
         name,
         description,
-      }).save();
+      });
+      const response = await department.save();
 
-      console.log("department created", response);
       return response;
     } catch (error) {
-      console.log(error);
-      throw new Error("INTERNAL_SERVER_ERROR");
+      throw new Error('INTERNAL_SERVER_ERROR'); // Consistent error message
     }
   };
-  
- /**
-  * Retrieve all departments
-  * @returns 
-  */
-  const retrieveAllDepartments = async () => {
+
+  /**
+   * Retrieve all departments.
+   *
+   * @returns  An array of department documents.
+   * @throws  Throws an error if the retrieval fails.
+   */
+  const retrieveAllDepartments = async (): Promise<any[]> => {
     try {
       const response = await DepartmentSchema.find();
-      return response
+      return response;
     } catch (error) {
-      console.log(error);
-      throw new Error("INTERNAL_SERVER_ERROR");
+      throw new Error('INTERNAL_SERVER_ERROR'); 
     }
   };
+
   return {
     createDepartment,
-    retrieveAllDepartments
+    retrieveAllDepartments,
   };
 };
 
-export const { createDepartment,retrieveAllDepartments } = departmentHelpers();
+export const { createDepartment, retrieveAllDepartments } = departmentHelpers();
