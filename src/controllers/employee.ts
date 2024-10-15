@@ -1,4 +1,4 @@
-import { createEmployee } from "../helpers/employee";
+import { createEmployee, findAllEmployeeDetails } from "../helpers/employee";
 import { EmployeeSchema } from "../models/employee";
 import { Request,Response } from "express";
 
@@ -25,11 +25,19 @@ const employeeController = () => {
     
   };
 
+  const getAllEmployeeDetails=async(req:Request,res:Response)=>{
+ 
+        const response=await findAllEmployeeDetails()
+        res.json(response)    
+  }
+
   return {
     addNewEmployee,
+    getAllEmployeeDetails
   };
 };
 
 export const {
-addNewEmployee
+addNewEmployee,
+getAllEmployeeDetails
 }=employeeController()
